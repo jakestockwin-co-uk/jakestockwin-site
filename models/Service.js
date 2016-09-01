@@ -5,7 +5,7 @@ var Service = keystone.List('Service');
 
 Service.add({
 	name: { type: String, required: true, initial: true, index: true },
-	description: { type: Types.html, wysiwyg: true, required: true, initial: true },
+	description: { type: Types.Html, wysiwyg: true, required: true, initial: true },
 });
 
 Service.defaultColumns = 'name';

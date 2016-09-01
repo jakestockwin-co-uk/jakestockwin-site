@@ -5,12 +5,12 @@ var Profile = keystone.List('Profile');
 
 Profile.add({
 	name: { type: String, required: true, index: true, initial: true },
-	image: { type: Types.cloudinaryImage },
+	image: { type: Types.CloudinaryImage },
 	position: { type: String },
-	description: { type: Types.html, wysiwyg: true },
-	github: { type: Types.url },
-	linkedIn: { type: Types.url },
-	tags: { type: Types.textarray },
+	description: { type: Types.Html, wysiwyg: true },
+	github: { type: Types.Url },
+	linkedIn: { type: Types.Url },
+	tags: { type: Types.TextArray },
 });
 
 Profile.defaultColumns = 'name';
