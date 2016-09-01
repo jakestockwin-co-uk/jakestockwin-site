@@ -16,6 +16,8 @@ Enquiry.add({
 	email: { type: Types.Email, required: true },
 	phone: { type: String },
 	enquiryType: { type: Types.Select, options: [
+		{ value: 'website', label: 'I\'m interested in your web design services' },
+		{ value: 'hosting', label: 'I\'m interested in your hosting services' },
 		{ value: 'message', label: 'Just leaving a message' },
 		{ value: 'question', label: 'I\'ve got a question' },
 		{ value: 'other', label: 'Something else...' },
