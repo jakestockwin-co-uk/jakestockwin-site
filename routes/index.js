@@ -11,6 +11,7 @@ keystone.pre('render', middleware.flashMessages);
 // Import Route Controllers
 var routes = {
 	views: importRoutes('./views'),
+	api: importRoutes('./api'),
 };
 
 var clientConfig = {
@@ -39,4 +40,8 @@ exports = module.exports = function (app) {
 
 	// Views
 	app.all('/', routes.views.index);
+
+
+	app.get('/api/portfolios/ids', keystone.middleware.api, routes.api.portfolio.ids);
+	app.get('/api/portfolios/:id', keystone.middleware.api, routes.api.portfolio.get);
 };
