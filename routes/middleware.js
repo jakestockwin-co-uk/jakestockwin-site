@@ -6,12 +6,12 @@ var _ = require('underscore');
 */
 exports.initLocals = function (req, res, next) {
 	res.locals.navLinks = [
-		{ label: 'Home', key: 'home', href: '/#home' },
-		{ label: 'Portfolio', key: 'portfolio', href: '/#portfolio' },
-		{ label: 'Testimonials', key: 'testimonials', href: '/#testimonials' },
-		{ label: 'Services', key: 'services', href: '/#services' },
-		{ label: 'The Team', key: 'team', href: '/#team' },
-		{ label: 'Contact Us', key: 'contact', href: '/#contact' },
+		{ label: 'Home', key: 'home', href: '#home' },
+		{ label: 'Portfolio', key: 'portfolio', href: '#portfolio' },
+		{ label: 'Testimonials', key: 'testimonials', href: '#testimonials' },
+		{ label: 'Services', key: 'services', href: '#services' },
+		{ label: 'The Team', key: 'team', href: '#team' },
+		{ label: 'Contact Us', key: 'contact', href: '#contact' },
 	];
 	res.locals.user = req.user;
 	next();
