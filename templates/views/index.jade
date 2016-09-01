@@ -2,31 +2,7 @@ extends ../layouts/default
 
 block content
 	.container
-		.section#home
-			
-		.section#portfolio
-			h1 Our Portfolio
-			#reactPortfolio
-				// Populated by react in /client/scripts/app.js
-				
-		.section#testimonials
-			h1 Testimonials
-			#reactTestimonials
-			// Populated by react in /client/scripts/testimonials.js
-				
-		.section#services
-			h1 Services
-			#reactServices
-			// Populated by react in /client/scripts/services.js
-				
-		.section#team
-			h1 Team
-			#reactTeam
-			// Populated by react in /client/scripts/team.js
-		
-		.section#contact
-			h1 Contact Us
-			include ../partials/contact
+		#app
 block js
 	script(src='/js/packages.js')
 	script(src='/js/app.js')
