@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Spinner, Glyph, Row, Col } from 'elemental';
+import { Spinner, Glyph, Row } from 'elemental';
 
 export const DataControl = React.createClass({
 	componentDidMount: function () {
