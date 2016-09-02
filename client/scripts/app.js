@@ -42,21 +42,13 @@ const Portfolios = React.createClass({
 			results.forEach(function (item) {
 				ids.push(item._id);
 			});
-			var newState;
-			if (this.state.portfolios.current) {
-				newState = update(this.state.portfolios, { $merge: {
-					ids: ids,
-					loaded: true,
-				} });
-				this.setState({ portfolios: newState });
-			} else {
-				newState = update(this.state.portfolios, { $merge: {
-					ids: ids,
-					loaded: true,
-					current: ids[0],
-				} });
-				this.setState({ portfolios: newState });
-			}
+			var newState = update(this.state.portfolios, { $merge: {
+				ids: ids,
+				loaded: true,
+				current: this.state.portfolios.current || ids[0],
+			} });
+			this.setState({ portfolios: newState });
+
 		}.bind(this));
 
 		this.testimonialIdUpdateRequest = $.get('/api/testimonials/ids', function (results) {
@@ -64,21 +56,12 @@ const Portfolios = React.createClass({
 			results.forEach(function (item) {
 				ids.push(item._id);
 			});
-			var newState;
-			if (this.state.testimonials.current) {
-				newState = update(this.state.testimonials, { $merge: {
-					ids: ids,
-					loaded: true,
-				} });
-				this.setState({ testimonials: newState });
-			} else {
-				newState = update(this.state.testimonials, { $merge: {
-					ids: ids,
-					loaded: true,
-					current: ids[0],
-				} });
-				this.setState({ testimonials: newState });
-			}
+			var newState = update(this.state.testimonials, { $merge: {
+				ids: ids,
+				loaded: true,
+				current: this.state.testimonials.current || ids[0],
+			} });
+			this.setState({ testimonials: newState });
 		}.bind(this));
 	},
 	changePortfolioId: function (newId, pause) {
