@@ -38,7 +38,7 @@ export const Portfolio = React.createClass({
 				<Card>
 					<h3>{this.state.name}</h3>
 					<a href={this.state.url} target="_blank">{this.state.url}</a>
-					<div dangerouslySetInnerHTML={{ __html: this.state.description }}></div>
+					<div dangerouslySetInnerHTML={{ __html: this.state.description }}/>
 				</Card>
 			</div>
 		);
