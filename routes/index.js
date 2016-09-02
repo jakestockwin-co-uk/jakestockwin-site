@@ -44,4 +44,6 @@ exports = module.exports = function (app) {
 
 	app.get('/api/portfolios/ids', keystone.middleware.api, routes.api.portfolio.ids);
 	app.get('/api/portfolios/:id', keystone.middleware.api, routes.api.portfolio.get);
+	app.get('/api/testimonials/ids', keystone.middleware.api, routes.api.testimonial.ids);
+	app.get('/api/testimonials/:id', keystone.middleware.api, routes.api.testimonial.get);
 };

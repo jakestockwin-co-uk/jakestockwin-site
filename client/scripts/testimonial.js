@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'elemental';
 
-export const Portfolio = React.createClass({
+export const Testimonial = React.createClass({
 	getInitialState: function () {
 		return ({
 			name: 'loading...',
@@ -20,25 +20,26 @@ export const Portfolio = React.createClass({
 		}
 	},
 	shouldComponentUpdate: function (nextProps, nextState) {
-		// Component should only update if the id has changed (in which case it needs to load a new portfolio)
+		// Component should only update if the id has changed (in which case it needs to load a new testimonial)
 		// or if the state has changed, since it needs to re-load once the data has updated.
 		return nextProps.id !== this.props.id || nextState.name !== this.state.name;
 	},
 	componentWillUnmount: function () {
-		this.portfolioRequest.abort();
+		this.testimonialRequest.abort();
 	},
 	update: function (id) {
-		this.portfolioRequest = $.get('/api/portfolios/' + id, function (result) {
+		this.testimonialRequest = $.get('/api/testimonials/' + id, function (result) {
 			this.setState(result);
 		}.bind(this));
 	},
 	render: function () {
 		return (
-			<div className="portfolio">
+			<div className="testimonial">
 				<Card>
 					<h3>{this.state.name}</h3>
-					<a href={this.state.url} target="_blank">{this.state.url}</a>
-					<div dangerouslySetInnerHTML={{ __html: this.state.description }}></div>
+					<p>Client: {this.state.company}</p>
+					<p>Left at: {this.state.time}</p>
+					<div dangerouslySetInnerHTML={{ __html: this.state.testimonial }}></div>
 				</Card>
 			</div>
 		);
