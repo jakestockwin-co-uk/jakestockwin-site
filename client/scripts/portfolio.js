@@ -22,6 +22,9 @@ export const Portfolio = React.createClass({
 			this.update(nextProps.id);
 		}
 	},
+	shouldComponentUpdate: function (nextProps, nextState) {
+		return nextProps.id !== this.props.id || nextState.name !== this.state.name;
+	},
 	componentWillUnmount: function () {
 		this.portfolioRequest.abort();
 	},

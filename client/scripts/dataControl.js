@@ -23,6 +23,10 @@ export const DataControl = React.createClass({
 			this.slide();
 		}.bind(this), 5000);
 	},
+	shouldComponentUpdate: function (nextProps, nextState) {
+		// Update if the current id has changed, or if the array of ids has changed.
+		return nextState.current !== this.state.current || !(arraysEqual(nextState.ids, this.state.ids));
+	},
 	componentWillUnmount: function () {
 		this.updateRequest.abort();
 		clearInterval(this.refreshIntervalId);
@@ -187,3 +191,16 @@ const ControlButton = React.createClass({
 	},
 });
 
+function arraysEqual (a, b) {
+	if (a === b) return true;
+	if (a == null || b == null) return false;
+	if (a.length !== b.length) return false;
+
+	// If you don't care about the order of the elements inside
+	// the array, you should sort both arrays here.
+
+	for (var i = 0; i < a.length; ++i) {
+		if (a[i] !== b[i]) return false;
+	}
+	return true;
+}
