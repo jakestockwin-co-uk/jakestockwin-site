@@ -123,9 +123,9 @@ const Portfolios = React.createClass({
 	render: function () {
 		return (
 			<div>
-				<Section id="home" title="" />
+				<Section id="home" title="jakestockwin.co.uk" />
 
-				<Section id="portfolio" title="Our Portfolio">
+				<Section id="portfolio" title="Portfolio">
 					<DataControl
 						slideInterval="5000"
 						data={this.state.portfolios}
