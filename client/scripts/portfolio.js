@@ -11,10 +11,7 @@ export const Portfolio = React.createClass({
 		});
 	},
 	componentWillMount: function () {
-		// TODO Remove this timeout before making site live.
-		setTimeout(function () {
-			this.update(this.props.id);
-		}.bind(this), 5000);
+		this.update(this.props.id);
 
 	},
 	componentWillReceiveProps (nextProps) {

@@ -2,118 +2,89 @@ import React from 'react';
 import { Button, Spinner, Glyph, Row, Col } from 'elemental';
 
 export const DataControl = React.createClass({
-	getInitialState: function () {
-		return {
-			ids: [],
-			loaded: false,
-			paused: false,
-		};
-	},
-	componentWillMount: function () {
-		// TODO Remove this timeout before making site live.
-		setInterval(function () {
-			this.updateData();
-		}.bind(this), 5000);
-	},
 	componentDidMount: function () {
-		this.refreshIntervalId = setInterval(function () {
-			this.updateData();
-		}.bind(this), 30000);
 		this.slideIntervalId = setInterval(function () {
 			this.slide();
-		}.bind(this), 5000);
+		}.bind(this), this.props.slideInterval);
 	},
 	shouldComponentUpdate: function (nextProps, nextState) {
-		// Update if the current id has changed, or if the array of ids has changed.
-		return nextState.current !== this.state.current || !(arraysEqual(nextState.ids, this.state.ids));
+		// Component should only update if list of ids has changed, or if current id has changed.
+		// Equivalent to not updating if both ids and current is the same.
+		return !(nextProps.data.current === this.props.data.current && arraysEqual(nextProps.data.ids, this.props.data.ids));
 	},
 	componentWillUnmount: function () {
-		this.updateRequest.abort();
-		clearInterval(this.refreshIntervalId);
 		clearInterval(this.slideIntervalId);
 	},
-	updateData: function () {
-		this.updateRequest = $.get(this.props.idQueryLink, function (results) {
-			var ids = [];
-			results.forEach(function (item) {
-				ids.push(item._id);
-			});
-			if (this.state.current) {
-				this.setState({
-					ids: ids,
-					loaded: true,
-				});
-			} else {
-				this.setState({
-					ids: ids,
-					loaded: true,
-					current: ids[0],
-				});
-			}
-		}.bind(this));
-	},
-	changePortfolioId: function (newId, pause) {
-		this.setState({
-			current: newId,
-			paused: pause,
-		});
+	changeId: function (newId, pause) {
+		this.props.changeId(newId, pause);
 	},
 	slide: function () {
-		if (this.state.paused !== true) {
-			this.changePortfolioRight();
+		if (this.props.data.paused !== true) {
+			this.changeRight(false);
 		}
 	},
-	changePortfolioLeft: function (pause) {
-		var currentIndex = this.state.ids.indexOf(this.state.current);
+	changeLeft: function (pause) {
+		var currentIndex = this.props.data.ids.indexOf(this.props.data.current);
 		var newIndex;
 		if (currentIndex === 0) {
-			newIndex = this.state.ids.length - 1;
+			newIndex = this.props.data.ids.length - 1;
 		} else {
 			newIndex = currentIndex - 1;
 		}
-		this.setState({
-			current: this.state.ids[newIndex],
-			paused: pause,
-		});
+		var newId = this.props.data.ids[newIndex];
+		// Unless pause is explicitly set to false, don't pause.
+		// This stops the buttons from passing back the click event,
+		// which occurs for the buttons in this, but not in Controls
+		// TODO Work out a way to fix this properly...
+		if (pause === false) {
+			this.changeId(newId, false);
+		} else {
+			this.changeId(newId, true);
+		}
 	},
-	changePortfolioRight: function (pause) {
-		var currentIndex = this.state.ids.indexOf(this.state.current);
+	changeRight: function (pause) {
+		var currentIndex = this.props.data.ids.indexOf(this.props.data.current);
 		var newIndex;
-		if (currentIndex === this.state.ids.length - 1) {
+		if (currentIndex === this.props.data.ids.length - 1) {
 			newIndex = 0;
 		} else {
 			newIndex = currentIndex + 1;
 		}
-		this.setState({
-			current: this.state.ids[newIndex],
-			paused: pause,
-		});
+		var newId = this.props.data.ids[newIndex];
+		// Unless pause is explicitly set to false, don't pause.
+		// This stops the buttons from passing back the click event,
+		// which occurs for the buttons in this, but not in Controls
+		// TODO Work out a way to fix this properly...
+		if (pause === false) {
+			this.changeId(newId, false);
+		} else {
+			this.changeId(newId, true);
+		}
 	},
 	render: function () {
-		if (!this.state.loaded) {
+		if (!this.props.data.loaded) {
 			return (
 				<div className="center">
 					<Spinner size="lg"/>
 				</div>
 			);
 		}
-		if (this.state.ids.length === 0) {
+		if (this.props.data.ids.length === 0) {
 			return (
 				<p>There are no items yet.</p>
 			);
 		}
-		var current = this.state.current;
+		var current = this.props.data.current;
 		const childrenWithProps = React.Children.map(this.props.children,
 			(child) => React.cloneElement(child, {
 				id: current,
 			})
 		);
-
 		return (
-			<div className="dataControl">
+			<div className={'dataControl ' + this.props.dataType + 'DataControl'}>
 				<Row>
 					<Col xs="15%" className="center">
-						<Button type="hollow-primary" onClick={this.changePortfolioLeft}>
+						<Button type="hollow-primary" onClick={this.changeLeft}>
 							<Glyph icon="arrow-left"/>
 						</Button>
 					</Col>
@@ -121,18 +92,19 @@ export const DataControl = React.createClass({
 						{childrenWithProps}
 					</Col>
 					<Col xs="15%" className="center">
-						<Button type="hollow-primary" onClick={this.changePortfolioRight}>
+						<Button type="hollow-primary" onClick={this.changeRight}>
 							<Glyph icon="arrow-right"/>
 						</Button>
 					</Col>
 				</Row>
 				<Row>
 					<Controls
-						ids={this.state.ids}
-						current={this.state.current}
-						changePortfolio={this.changePortfolioId}
-						changePortfolioLeft={this.changePortfolioLeft}
-						changePortfolioRight={this.changePortfolioRight}
+						ids={this.props.data.ids}
+						current={this.props.data.current}
+						changeId={this.changeId}
+						changeLeft={this.changeLeft}
+						changeRight={this.changeRight}
+						dataType={this.props.dataType}
 					/>
 				</Row>
 			</div>
@@ -141,33 +113,34 @@ export const DataControl = React.createClass({
 });
 
 const Controls = React.createClass({
-	changePortfolioId: function (newId) {
-		this.props.changePortfolio(newId, true);
+	changeId: function (newId) {
+		this.props.changeId(newId, true);
 	},
-	changePortfolioLeft: function () {
-		this.props.changePortfolioLeft(true);
+	changeLeft: function () {
+		this.props.changeLeft(true);
 	},
-	changePortfolioRight: function () {
-		this.props.changePortfolioRight(true);
+	changeRight: function () {
+		this.props.changeRight(true);
 	},
 	render: function () {
 		var controlButtons = [];
 		var current = this.props.current;
-		var changePortfolioId = this.changePortfolioId;
+		var changeId = this.changeId;
+		var dataType = this.props.dataType;
 		if (this.props.ids) {
 			controlButtons = this.props.ids.map(function (id) {
 				return (
-					<ControlButton key={id} id={id} current={current} handler={changePortfolioId}/>
+					<ControlButton key={id} id={id} current={current} handler={changeId} dataType={dataType}/>
 				);
 			});
 		}
 		return (
-			<div className="controls" classID="portfolioControls">
-				<div className="control" onClick={this.changePortfolioLeft}>
+			<div className={'controls ' + this.props.dataType + 'Controls'}>
+				<div className={'control ' + this.props.dataType + 'Control'} onClick={this.changeLeft}>
 					<Glyph icon="triangle-left"/>
 				</div>
 				{controlButtons}
-				<div className="control" onClick={this.changePortfolioRight}>
+				<div className={'control ' + this.props.dataType + 'Control'} onClick={this.changeRight}>
 					<Glyph icon="triangle-right"/>
 				</div>
 			</div>
@@ -183,7 +156,7 @@ const ControlButton = React.createClass({
 		if (this.props.id) {
 			var active = this.props.current === this.props.id;
 			return (
-				<div className="control" onClick={this.handleClick}>
+				<div className={'control ' + this.props.dataType + 'Control'} onClick={this.handleClick}>
 					<Glyph icon="primitive-dot" type={active ? 'muted' : 'default'}/>
 				</div>
 			);
