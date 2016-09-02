@@ -35,8 +35,13 @@ keystone.set('locals', {
 keystone.set('routes', require('./routes'));
 
 keystone.set('nav', {
+	content: ['portfolios', 'testimonials', 'services', 'profiles'],
 	enquiries: 'enquiries',
 	users: 'users',
 });
+
+if (keystone.get('env') === 'production') {
+	keystone.set('session store', 'connect-mongo');
+}
 
 keystone.start();
