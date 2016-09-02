@@ -21,6 +21,8 @@ keystone.init({
 	'auth': true,
 	'user model': 'User',
 
+	'model prefix': 'jakestockwin',
+
 });
 
 keystone.import('models');
