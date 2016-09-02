@@ -1,12 +1,14 @@
 import React from 'react';
-import { Card } from 'elemental';
+import { Card, Pill } from 'elemental';
 
 export const Profile = React.createClass({
 	getInitialState: function () {
 		return ({
 			name: 'loading...',
-			client: '',
-			url: '',
+			position: '',
+			github: '',
+			linkedin: '',
+			tags: [],
 			description: 'Please wait while we load the information...',
 		});
 	},
@@ -33,11 +35,16 @@ export const Profile = React.createClass({
 		}.bind(this));
 	},
 	render: function () {
+		console.log(this.state);
+		var tagPills = this.state.tags.map(function (tag) {
+			return (<Pill type="primary" label={tag} key={tag} />);
+		});
 		return (
 			<div className="profile">
 				<Card>
 					<h3>{this.state.name}</h3>
 					<p>{this.state.position}</p>
+					{tagPills}
 					<div dangerouslySetInnerHTML={{ __html: this.state.description }}/>
 				</Card>
 			</div>
