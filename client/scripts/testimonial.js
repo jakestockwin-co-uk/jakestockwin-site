@@ -38,7 +38,7 @@ export const Testimonial = React.createClass({
 				<Card>
 					<h3>{this.state.name}</h3>
 					<p>Client: {this.state.company}</p>
-					<p>Left at: {this.state.time}</p>
+					<p>Left at: {this.state.createdAt}</p>
 					<div dangerouslySetInnerHTML={{ __html: this.state.testimonial }}></div>
 				</Card>
 			</div>
