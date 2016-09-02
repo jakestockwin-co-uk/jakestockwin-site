@@ -3,11 +3,12 @@ import { Card } from 'elemental';
 
 export const Portfolio = React.createClass({
 	getInitialState: function () {
-		return ({
+		return ({ data: {
 			name: 'loading...',
 			client: '',
 			url: '',
 			description: 'Please wait while we load the information...',
+		},
 		});
 	},
 	componentWillMount: function () {
@@ -22,23 +23,23 @@ export const Portfolio = React.createClass({
 	shouldComponentUpdate: function (nextProps, nextState) {
 		// Component should only update if the id has changed (in which case it needs to load a new portfolio)
 		// or if the state has changed, since it needs to re-load once the data has updated.
-		return nextProps.id !== this.props.id || nextState.name !== this.state.name;
+		return nextProps.id !== this.props.id || nextState.data.name !== this.state.data.name;
 	},
 	componentWillUnmount: function () {
 		this.portfolioRequest.abort();
 	},
 	update: function (id) {
 		this.portfolioRequest = $.get('/api/portfolios/' + id, function (result) {
-			this.setState(result);
+			this.setState({ data: result });
 		}.bind(this));
 	},
 	render: function () {
 		return (
 			<div className="portfolio cardContainer">
 				<Card>
-					<h3>{this.state.name}</h3>
-					<a href={this.state.url} target="_blank">{this.state.url}</a>
-					<div dangerouslySetInnerHTML={{ __html: this.state.description }}/>
+					<h3>{this.state.data.name}</h3>
+					<a href={this.state.data.url} target="_blank">{this.state.data.url}</a>
+					<div dangerouslySetInnerHTML={{ __html: this.state.data.description }}/>
 				</Card>
 			</div>
 		);
