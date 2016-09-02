@@ -5,7 +5,8 @@ var Testimonial = keystone.List('Testimonial');
 
 Testimonial.add({
 	name: { type: String, required: true, initial: true, index: true },
-	company: { type: String, required: true, initial: true },
+	company: { type: String, initial: true },
+	position: { type: String, initial: true },
 	testimonial: { type: Types.Textarea, required: true, initial: true },
 	createdAt: { type: Date, default: Date.now },
 });
