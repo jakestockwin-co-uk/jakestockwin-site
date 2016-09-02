@@ -32,7 +32,7 @@ export const Service = React.createClass({
 	},
 	render: function () {
 		return (
-			<div className="service">
+			<div className="cardContainer service">
 				<Card>
 					<h3>{this.state.name}</h3>
 					<div dangerouslySetInnerHTML={{ __html: this.state.description }}/>

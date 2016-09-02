@@ -32,15 +32,7 @@ export const DataControl = React.createClass({
 			newIndex = currentIndex - 1;
 		}
 		var newId = this.props.data.ids[newIndex];
-		// Unless pause is explicitly set to false, don't pause.
-		// This stops the buttons from passing back the click event,
-		// which occurs for the buttons in this, but not in Controls
-		// TODO Work out a way to fix this properly...
-		if (pause === false) {
-			this.changeId(newId, false);
-		} else {
-			this.changeId(newId, true);
-		}
+		this.changeId(newId, pause);
 	},
 	changeRight: function (pause) {
 		var currentIndex = this.props.data.ids.indexOf(this.props.data.current);
@@ -51,15 +43,8 @@ export const DataControl = React.createClass({
 			newIndex = currentIndex + 1;
 		}
 		var newId = this.props.data.ids[newIndex];
-		// Unless pause is explicitly set to false, don't pause.
-		// This stops the buttons from passing back the click event,
-		// which occurs for the buttons in this, but not in Controls
-		// TODO Work out a way to fix this properly...
-		if (pause === false) {
-			this.changeId(newId, false);
-		} else {
-			this.changeId(newId, true);
-		}
+		this.changeId(newId, pause);
+
 	},
 	render: function () {
 		if (!this.props.data.loaded) {
@@ -83,19 +68,7 @@ export const DataControl = React.createClass({
 		return (
 			<div className={'dataControl ' + this.props.dataType + 'DataControl'}>
 				<Row>
-					<Col xs="15%" className="center">
-						<Button type="hollow-primary" onClick={this.changeLeft}>
-							<Glyph icon="arrow-left"/>
-						</Button>
-					</Col>
-					<Col xs="70%">
 						{childrenWithProps}
-					</Col>
-					<Col xs="15%" className="center">
-						<Button type="hollow-primary" onClick={this.changeRight}>
-							<Glyph icon="arrow-right"/>
-						</Button>
-					</Col>
 				</Row>
 				<Row>
 					<Controls

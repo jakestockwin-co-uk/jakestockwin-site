@@ -35,7 +35,7 @@ export const Testimonial = React.createClass({
 	},
 	render: function () {
 		return (
-			<div className="testimonial">
+			<div className="testimonial cardContainer">
 				<Card>
 					<div dangerouslySetInnerHTML={{ __html: this.state.testimonial }}/>
 					<br/>

@@ -40,7 +40,7 @@ export const Profile = React.createClass({
 			return (<Pill type="primary" label={tag} key={tag} />);
 		});
 		return (
-			<div className="profile">
+			<div className="profile cardContainer">
 				<Card>
 					<h3>{this.state.name}</h3>
 					<p>{this.state.position}</p>

@@ -34,7 +34,7 @@ export const Portfolio = React.createClass({
 	},
 	render: function () {
 		return (
-			<div className="portfolio">
+			<div className="portfolio cardContainer">
 				<Card>
 					<h3>{this.state.name}</h3>
 					<a href={this.state.url} target="_blank">{this.state.url}</a>
