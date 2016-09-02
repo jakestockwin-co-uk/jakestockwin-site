@@ -1,7 +1,8 @@
 import React from 'react';
 var update = require('react-addons-update');
 import ReactDom from 'react-dom';
-import { DataControl } from './dataControl';
+import { Row, Col } from 'elemental';
+import { CardDataControl } from './cardDataControl';
 import { Portfolio } from './portfolio';
 import { Testimonial } from './testimonial';
 import { Section } from './section';
@@ -106,13 +107,6 @@ const Portfolios = React.createClass({
 		} });
 		this.setState({ testimonials: newState });
 	},
-	changeServiceId: function (newId, pause) {
-		var newState = update(this.state.services, { $merge: {
-			current: newId,
-			paused: pause,
-		} });
-		this.setState({ services: newState });
-	},
 	changeProfileId: function (newId, pause) {
 		var newState = update(this.state.profiles, { $merge: {
 			current: newId,
@@ -121,52 +115,55 @@ const Portfolios = React.createClass({
 		this.setState({ profiles: newState });
 	},
 	render: function () {
+		var services = [];
+		this.state.services.ids.forEach(function (id) {
+			services.push(
+				<Col sm="50%" key={id}>
+					<Service id={id} key={id}/>
+				</Col>
+			);
+		});
 		return (
 			<div>
 				<Section id="home" title="jakestockwin.co.uk" />
 
 				<Section id="portfolio" title="Portfolio">
-					<DataControl
+					<CardDataControl
 						slideInterval="5000"
 						data={this.state.portfolios}
 						changeId={this.changePortfolioId}
 						dataType="portfolio"
 					>
 						<Portfolio />
-					</DataControl>
+					</CardDataControl>
 				</Section>
 
 				<Section id="testimonials" title="Testimonials">
-					<DataControl
+					<CardDataControl
 						slideInterval="5000"
 						data={this.state.testimonials}
 						changeId={this.changeTestimonialId}
 						dataType="testimonial"
 					>
 						<Testimonial />
-					</DataControl>
+					</CardDataControl>
 				</Section>
 
 				<Section id="services" title="Services">
-					<DataControl
-						slideInterval="5000"
-						data={this.state.services}
-						changeId={this.changeServiceId}
-						dataType="services"
-					>
-						<Service />
-					</DataControl>
+					<Row>
+						{services}
+					</Row>
 				</Section>
 
 				<Section id="team" title="Team">
-					<DataControl
+					<CardDataControl
 						slideInterval="5000"
 						data={this.state.profiles}
 						changeId={this.changeProfileId}
 						dataType="profiles"
 					>
 						<Profile />
-					</DataControl>
+					</CardDataControl>
 				</Section>
 
 				<Section id="contact" title="Contact Us" />

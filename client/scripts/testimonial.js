@@ -42,8 +42,8 @@ export const Testimonial = React.createClass({
 					<br/>
 					<p>
 						From: {this.state.data.name}
-						{(this.state.data.position === '') ? '' : ' (' + this.state.data.position + ')'}
-						{(this.state.data.company === '') ? '' : ', ' + this.state.data.company}
+						{(this.state.data.position === undefined || this.state.data.position === '') ? '' : ' (' + this.state.data.position + ')'}
+						{(this.state.data.company === undefined || this.state.data.company === '') ? '' : ', ' + this.state.data.company}
 					</p>
 					<p>Left {moment(this.state.data.createdAt).fromNow()}</p>
 				</Card>
