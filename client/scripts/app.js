@@ -9,7 +9,7 @@ import { Section } from './section';
 import { Service } from './service';
 import { Profile } from './profile';
 
-const Portfolios = React.createClass({
+const App = React.createClass({
 	getInitialState: function () {
 		var defaultState = {
 			ids: [],
@@ -168,4 +168,4 @@ const Portfolios = React.createClass({
 	},
 });
 
-ReactDom.render(<Portfolios />, document.getElementById('app'));
+ReactDom.render(<App />, document.getElementById('app'));
