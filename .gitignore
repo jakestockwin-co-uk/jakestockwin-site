@@ -32,3 +32,5 @@ node_modules
 
 .idea/
 *.css
+
+public/js/client/
