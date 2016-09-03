@@ -1,7 +1,7 @@
 import React from 'react';
 import { Spinner, Glyph, Row } from 'elemental';
 
-export const CardDataControl = React.createClass({
+export const SlidingCardDataControl = React.createClass({
 	componentDidMount: function () {
 		this.slideIntervalId = setInterval(function () {
 			this.slide();

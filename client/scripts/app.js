@@ -1,8 +1,8 @@
 import React from 'react';
 var update = require('react-addons-update');
 import ReactDom from 'react-dom';
-import { Row, Col } from 'elemental';
-import { CardDataControl } from './cardDataControl';
+import { SlidingCardDataControl } from './slidingCardDataControl';
+import { TiledCardDataControl } from './tiledCardDataControl';
 import { Portfolio } from './portfolio';
 import { Testimonial } from './testimonial';
 import { Section } from './section';
@@ -115,55 +115,51 @@ const Portfolios = React.createClass({
 		this.setState({ profiles: newState });
 	},
 	render: function () {
-		var services = [];
-		this.state.services.ids.forEach(function (id) {
-			services.push(
-				<Col sm="50%" key={id}>
-					<Service id={id} key={id}/>
-				</Col>
-			);
-		});
 		return (
 			<div>
 				<Section id="home" title="jakestockwin.co.uk" />
 
 				<Section id="portfolio" title="Portfolio">
-					<CardDataControl
+					<SlidingCardDataControl
 						slideInterval="5000"
 						data={this.state.portfolios}
 						changeId={this.changePortfolioId}
 						dataType="portfolio"
 					>
 						<Portfolio />
-					</CardDataControl>
+					</SlidingCardDataControl>
 				</Section>
 
 				<Section id="testimonials" title="Testimonials">
-					<CardDataControl
+					<SlidingCardDataControl
 						slideInterval="5000"
 						data={this.state.testimonials}
 						changeId={this.changeTestimonialId}
 						dataType="testimonial"
 					>
 						<Testimonial />
-					</CardDataControl>
+					</SlidingCardDataControl>
 				</Section>
 
 				<Section id="services" title="Services">
-					<Row>
-						{services}
-					</Row>
+					<TiledCardDataControl
+						data={this.state.services}
+						dataType="services"
+						cardWidth="50%"
+					>
+						<Service />
+					</TiledCardDataControl>
 				</Section>
 
 				<Section id="team" title="Team">
-					<CardDataControl
+					<SlidingCardDataControl
 						slideInterval="5000"
 						data={this.state.profiles}
 						changeId={this.changeProfileId}
 						dataType="profiles"
 					>
 						<Profile />
-					</CardDataControl>
+					</SlidingCardDataControl>
 				</Section>
 
 				<Section id="contact" title="Contact Us" />
