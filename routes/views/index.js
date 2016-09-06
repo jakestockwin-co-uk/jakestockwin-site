@@ -12,27 +12,25 @@ exports = module.exports = function (req, res) {
 
 
 	// Enquiry stuff:
-	locals.enquiryTypes = Enquiry.fields.enquiryType.ops;
-	locals.formData = req.body || {};
-	locals.validationErrors = {};
-	locals.enquirySubmitted = false;
 	// On POST requests, add the Enquiry item to the database
 	view.on('post', { action: 'contact' }, function (next) {
 
 		var newEnquiry = new Enquiry.model();
 		var updater = newEnquiry.getUpdateHandler(req);
-
 		updater.process(req.body, {
-			flashErrors: true,
 			fields: 'name, email, phone, enquiryType, message',
 			errorMessage: 'There was a problem submitting your enquiry:',
 		}, function (err) {
 			if (err) {
-				locals.validationErrors = err.errors;
+				res.send({
+					success: false,
+					validationErrors: err.errors,
+				});
+				res.end(400);
 			} else {
-				locals.enquirySubmitted = true;
+				res.send({ success: true });
+				res.end(200);
 			}
-			next();
 		});
 	});
 	// End Enquiry stuff

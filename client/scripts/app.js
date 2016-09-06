@@ -3,6 +3,7 @@ var update = require('react-addons-update');
 import ReactDom from 'react-dom';
 import { SlidingCardDataControl } from './slidingCardDataControl';
 import { TiledCardDataControl } from './tiledCardDataControl';
+import { Contact } from './contact';
 import { Portfolio } from './portfolio';
 import { Testimonial } from './testimonial';
 import { Section } from './section';
@@ -162,7 +163,9 @@ const App = React.createClass({
 					</SlidingCardDataControl>
 				</Section>
 
-				<Section id="contact" title="Contact Us" />
+				<Section id="contact" title="Contact Us">
+					<Contact />
+				</Section>
 			</div>
 		);
 	},
