@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card } from 'elemental';
 import moment from 'moment';
 
 export const Testimonial = React.createClass({
@@ -36,17 +35,15 @@ export const Testimonial = React.createClass({
 	},
 	render: function () {
 		return (
-			<div className="testimonial cardContainer">
-				<Card>
-					<div dangerouslySetInnerHTML={{ __html: this.state.data.testimonial }}/>
-					<br/>
-					<p>
-						From: {this.state.data.name}
-						{(this.state.data.position === undefined || this.state.data.position === '') ? '' : ' (' + this.state.data.position + ')'}
-						{(this.state.data.company === undefined || this.state.data.company === '') ? '' : ', ' + this.state.data.company}
-					</p>
-					<p>Left {moment(this.state.data.createdAt).fromNow()}</p>
-				</Card>
+			<div className="testimonial col-md-8 col-md-offset-2">
+				<div className="testimonialText" dangerouslySetInnerHTML={{ __html: '"' + this.state.data.testimonial + '"' }}/>
+				<br/>
+				<p className="testimonialAuthor">
+					{this.state.data.name}
+					{(this.state.data.position === undefined || this.state.data.position === '') ? '' : ' (' + this.state.data.position + ')'}
+					{(this.state.data.company === undefined || this.state.data.company === '') ? '' : ', ' + this.state.data.company}
+				</p>
+				<p className="testimonialDate">{moment(this.state.data.createdAt).fromNow()}</p>
 			</div>
 		);
 	},
